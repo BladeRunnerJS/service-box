@@ -1,3 +1,5 @@
+[![Build Status](https://travis-ci.org/BladeRunnerJS/service-box.png)](https://travis-ci.org/BladeRunnerJS/service-box)
+
 # service-box
 
 'service-box' is a service registry for doing IoC within JavaScript apps. It differs from other _service-registries_ / _service-locators_ / _ioc-containers_ in that it allows services to be created asynchronously while depending on other services that might also be created asynchronously, yet allows apps to synchronously retrieve services for simplicity.
