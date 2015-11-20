@@ -3,12 +3,15 @@ import chai from 'chai';
 const expect = chai.expect;
 
 describe('ServiceBox', function() {
+  let serviceBox;
+
   const service = function() {
     return Promise.resolve('Service');
   };
 
   const dependentService = function() {
-    return Promise.resolve('Dependent Service');
+    const serviceName = serviceBox.get('service');
+    return Promise.resolve(`Dependent Service (depends on '${serviceName}')`);
   };
   dependentService.dependencies = ['service'];
 
@@ -16,8 +19,6 @@ describe('ServiceBox', function() {
     return Promise.resolve('Other Service');
   };
   otherService.dependencies = ['dependent-service'];
-
-  let serviceBox;
 
   beforeEach(function() {
     serviceBox = new ServiceBox();
@@ -60,7 +61,7 @@ describe('ServiceBox', function() {
 
     return serviceBox.resolve(['dependent-service']).then(function() {
       expect(serviceBox.get('service')).to.equal('Service');
-      expect(serviceBox.get('dependent-service')).to.equal('Dependent Service');
+      expect(serviceBox.get('dependent-service')).to.equal('Dependent Service (depends on \'Service\')');
       expect(() => serviceBox.get('other-service')).to.throw(Error);
     });
   });
@@ -73,7 +74,7 @@ describe('ServiceBox', function() {
 
     return serviceBox.resolve(['dependent-service', 'other-service1']).then(function() {
       expect(serviceBox.get('service')).to.equal('Service');
-      expect(serviceBox.get('dependent-service')).to.equal('Dependent Service');
+      expect(serviceBox.get('dependent-service')).to.equal('Dependent Service (depends on \'Service\')');
       expect(serviceBox.get('other-service1')).to.equal('Other Service');
       expect(() => serviceBox.get('other-service2')).to.throw(Error);
     });
@@ -87,7 +88,7 @@ describe('ServiceBox', function() {
 
     return serviceBox.resolveAll().then(function() {
       expect(serviceBox.get('service')).to.equal('Service');
-      expect(serviceBox.get('dependent-service')).to.equal('Dependent Service');
+      expect(serviceBox.get('dependent-service')).to.equal('Dependent Service (depends on \'Service\')');
       expect(serviceBox.get('other-service1')).to.equal('Other Service');
       expect(serviceBox.get('other-service2')).to.equal('Other Service');
     });
