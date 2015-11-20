@@ -1,0 +1,15 @@
+{
+	"env": {
+		"browser": true,
+		"es6": true
+	},
+	"rules": {
+		"quotes": [2, "single"],
+		"no-debugger": 1,
+		"no-console": 1,
+		"no-underscore-dangle": 0
+	},
+	"ecmaFeatures": {
+		"modules": true
+	}
+}

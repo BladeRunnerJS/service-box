@@ -1,0 +1,35 @@
+{
+  "name": "service-box",
+  "version": "0.0.1",
+  "description": "A service registry for doing IoC within JavaScript apps.",
+  "author": "Dominic Chambers",
+  "license": "ISC",
+  "main": "dist/service-box.js",
+  "scripts": {
+    "prepublish": "npm run build:es5 && npm run build:module",
+    "build:es5": "mkdirp dist && babel src -d dist",
+    "build:module": "mkdirp dist && browserify src/service-box.js -d -s serviceBox -t babelify -o dist/service-box-standalone.js",
+    "pretest": "npm run pretest:lint",
+    "pretest:lint": "eslint src test",
+    "test": "npm run test:node && npm run test:browser",
+    "test:node": "mocha --compilers js:babel/register test",
+    "test:node:debug": "mocha --compilers js:babel/register test -w",
+    "test:browser": "karma start",
+    "test:browser:debug": "karma start karma-debug.conf.js"
+  },
+  "devDependencies": {
+    "babel": "^5.6.14",
+    "babelify": "^6.1.2",
+    "browserify": "^10.2.4",
+    "chai": "^3.0.0",
+    "eslint": "^0.23.0",
+    "karma": "^0.12.37",
+    "karma-browserify": "^4.2.1",
+    "karma-chrome-launcher": "^0.2.0",
+    "karma-cli": "0.0.4",
+    "karma-firefox-launcher": "^0.1.6",
+    "karma-mocha": "^0.2.0",
+    "mkdirp": "^0.5.1",
+    "mocha": "^2.2.5"
+  }
+}
