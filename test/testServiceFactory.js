@@ -1,5 +1,4 @@
-import ServiceBox from '../src/ServiceBox.js';
-import testServiceFactory from '../src/serviceFactory.js';
+import {default as ServiceBox, serviceFactory} from '../src/service-box.js';
 import chai from 'chai';
 const expect = chai.expect;
 
@@ -24,7 +23,7 @@ describe('ServiceBox', function() {
   });
 
   it('instantiates the provided service class', function() {
-    serviceBox.register('the-service', testServiceFactory(ServiceClass));
+    serviceBox.register('the-service', serviceFactory(ServiceClass));
 
     return serviceBox.resolveAll().then(function() {
       expect(serviceBox.get('the-service').name).to.equal('Service Instance');
@@ -32,8 +31,8 @@ describe('ServiceBox', function() {
   });
 
   it('allows a services dependencies to be taken into account', function() {
-    serviceBox.register('service', testServiceFactory(ServiceClass));
-    serviceBox.register('dependent-service', testServiceFactory(DependentServiceClass, ['service']));
+    serviceBox.register('service', serviceFactory(ServiceClass));
+    serviceBox.register('dependent-service', serviceFactory(DependentServiceClass, ['service']));
 
     return serviceBox.resolve(['dependent-service']).then(function() {
       expect(serviceBox.get('service').name).to.equal('Service Instance');

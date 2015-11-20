@@ -1,4 +1,4 @@
-import ServiceBox from '../src/ServiceBox.js';
+import ServiceBox from '../src/service-box.js';
 import chai from 'chai';
 const expect = chai.expect;
 
