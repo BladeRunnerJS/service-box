@@ -1,6 +1,6 @@
 {
   "name": "service-box",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "A service registry for doing IoC within JavaScript apps.",
   "author": "Dominic Chambers",
   "license": "ISC",
